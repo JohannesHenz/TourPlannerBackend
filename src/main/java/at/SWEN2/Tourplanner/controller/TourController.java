@@ -1,8 +1,11 @@
 package at.SWEN2.Tourplanner.controller;
 
 import at.SWEN2.Tourplanner.model.Tour;
+import at.SWEN2.Tourplanner.model.TourLog;
 import at.SWEN2.Tourplanner.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,8 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tours")
 public class TourController {
+
+    private final TourService tourService;
+
+
     @Autowired
-    private TourService tourService;
+    public TourController(TourService tourService) {
+        this.tourService = tourService;
+    }
 
     @GetMapping
     public List<Tour> getAllTours() {
@@ -24,8 +33,15 @@ public class TourController {
     }
 
     @PostMapping
-    public Tour createTour(@RequestBody Tour tour) {
-        return tourService.saveTour(tour);
+    public ResponseEntity<Tour> createTour(@RequestBody Tour tour) {
+        Tour createdTour = tourService.saveTour(tour);
+        return new ResponseEntity<>(createdTour, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{tourId}/logs")
+    public ResponseEntity<TourLog> addTourLog(@PathVariable Long tourId, @RequestBody TourLog tourLog) {
+        TourLog createdTourLog = tourService.addTourLog(tourId, tourLog);
+        return new ResponseEntity<>(createdTourLog, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
