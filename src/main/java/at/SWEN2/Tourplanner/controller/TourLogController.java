@@ -28,6 +28,7 @@ public class TourLogController {
         tourLog.setId(id);
         return tourLogService.saveTourLog(tourLog);
     }
+    // todo: change it so it uses
 
     @DeleteMapping("/{id}")
     public void deleteTourLog(@PathVariable Long id) {
