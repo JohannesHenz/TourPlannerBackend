@@ -32,4 +32,7 @@ public class RouteInfo {
     public void setGeometry(String geometry) {
         this.geometry = geometry;
     }
+
+
+
 }

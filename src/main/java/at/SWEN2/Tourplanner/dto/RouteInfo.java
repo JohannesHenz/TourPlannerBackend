@@ -24,6 +24,10 @@ public class RouteInfo {
     public static class Summary {
         private double distance;
         private double duration;
+
+        public void setDuration(double duration) {
+            this.duration = duration;
+        }
     }
 
 
