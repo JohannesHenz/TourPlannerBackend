@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const coordinates = JSON.parse(process.argv[2]);
 const filePath = process.argv[3];
+console.log(filePath);
 
 (async () => {
     const browser = await puppeteer.launch();

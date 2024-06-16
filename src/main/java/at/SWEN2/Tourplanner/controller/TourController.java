@@ -141,33 +141,6 @@ public class TourController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    /*
-    // GET the image of a specific tour
-    @GetMapping("/{tourId}")
-    public ResponseEntity<Tour> getTourById(@PathVariable String tourId) {
-        Tour tour = tourService.getTourById(tourId);
-        if (tour != null) {
-            String imagePath = "C:\\Users\\Johannes Henz\\Desktop\\Tourplanner_Backend\\Tourplanner\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images" + tour.getId() + ".png"; // Adjust path as needed
-            tour.setMapImageUrl(imagePath);
-            return ResponseEntity.ok(tour);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-*/
-    //todo: make it work to send the image to the frontend
-    @GetMapping("/{tourId}")
-    public ResponseEntity<Tour> getTourById(@PathVariable String tourId) {
-        Tour tour = tourService.getTourById(tourId);
-        if (tour != null) {
-            String imagePath = "C:\\Users\\Johannes Henz\\Desktop\\Tourplanner_Backend\\Tourplanner\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images" + tour.getId() + ".png"; // Adjust path as needed
-            tour.setMapImageUrl(imagePath);
-            return ResponseEntity.ok(tour);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     // GET the image of a specific tour
     @GetMapping("/{tourId}/image")
@@ -175,7 +148,7 @@ public class TourController {
         Tour tour = tourService.getTourById(tourId);
         if (tour != null) {
             String basePath = Paths.get("").toAbsolutePath().toString();
-            String imagePath = "file:" + basePath + "/src/main/java/at/SWEN2/Tourplanner/images" + tour.getId() + ".png";
+            String imagePath = "file:" + basePath + "\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images\\images" + tour.getId() + ".png";
             Resource imageResource = resourceLoader.getResource(imagePath);
             if (imageResource.exists()) {
                 logger.info("Image resource: " + imageResource);
@@ -213,7 +186,8 @@ public class TourController {
                     tour.setDistance(feature.getProperties().getSummary().getDistance());
                     tour.setEstimatedTime(feature.getProperties().getSummary().getDuration());
 
-                    String imagePath = "C:\\Users\\Johannes Henz\\Desktop\\Tourplanner_Backend\\Tourplanner\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images" + tour.getId() + ".png"; // Adjust path as needed
+                    String basePath = Paths.get("").toAbsolutePath().toString();
+                    String imagePath = basePath + "\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images\\images" + tour.getId() + ".png";
                     try {
                         mapImageService.downloadMapImage(feature.getProperties(),feature.getGeometry(), imagePath);
                         tour.setMapImageUrl(imagePath);

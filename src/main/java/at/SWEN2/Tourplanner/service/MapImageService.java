@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -41,9 +42,11 @@ public class MapImageService {
         // Log the coordinates JSON
         logger.debug("Coordinates JSON: {}", coordinatesJson);
 
+        String basePath = Paths.get("").toAbsolutePath().toString();
         ProcessBuilder processBuilder = new ProcessBuilder("node", "generateMapImage.js", coordinatesJson, imagePath);
-        processBuilder.directory(new File("C:\\Users\\Johannes Henz\\Desktop\\Tourplanner_Backend\\Tourplanner"));
+        processBuilder.directory(new File(basePath));
         processBuilder.redirectErrorStream(true);
+
 
         Process process = processBuilder.start();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
