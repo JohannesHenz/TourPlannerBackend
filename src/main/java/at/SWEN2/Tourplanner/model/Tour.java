@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Tour {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(name = "name")
     private String name;
@@ -32,7 +32,9 @@ public class Tour {
 
     @Column(name = "estimated_time")
     private Double estimatedTime;
-    //private String routeInfoImagePath;
+
+    @Column(name = "map_image_url")
+    private String mapImageUrl;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -46,5 +48,21 @@ public class Tour {
     public void removeTourLog(TourLog tourLog) {
         tourLogs.remove(tourLog);
         tourLog.setTour(null);
+    }
+
+    public String getMapImageUrl() {
+        return mapImageUrl;
+    }
+
+    public void setMapImageUrl(String mapImageUrl) {
+        this.mapImageUrl = mapImageUrl;
+    }
+
+    public String getFromLocation() {
+        return fromLocation;
+    }
+
+    public String getToLocation() {
+        return toLocation;
     }
 }

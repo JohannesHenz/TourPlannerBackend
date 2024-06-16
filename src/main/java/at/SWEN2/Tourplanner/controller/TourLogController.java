@@ -14,7 +14,7 @@ public class TourLogController {
     private TourLogService tourLogService;
 
     @GetMapping
-    public List<TourLog> getAllTourLogs(@RequestParam Long tourId) {
+    public List<TourLog> getAllTourLogs(@RequestParam String tourId) {
         return tourLogService.getTourLogsByTourId(tourId);
     }
 
@@ -24,15 +24,15 @@ public class TourLogController {
     }
 
     @PutMapping("/{id}")
-    public TourLog updateTourLog(@PathVariable Long id, @RequestBody TourLog tourLog) {
+    public TourLog updateTourLog(@PathVariable String id, @RequestBody TourLog tourLog) {
         tourLog.setId(id);
         return tourLogService.saveTourLog(tourLog);
     }
     // todo: change it so it uses
 
     @DeleteMapping("/{id}")
-    public void deleteTourLog(@PathVariable Long id) {
-        tourLogService.deleteTourLog(id);
+    public void deleteTourLog(@PathVariable String tourId, @PathVariable String logId) {
+        tourLogService.deleteTourLog(tourId, logId);
     }
 
     // Additional endpoints...

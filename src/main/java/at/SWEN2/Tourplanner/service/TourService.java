@@ -27,8 +27,8 @@ public class TourService {
         return tourRepository.findAll();
     }
 
-    public Tour getTourById(Long id) {
-        return tourRepository.findById(id).orElse(null);
+    public Tour getTourById(String id) { // Change this to String
+        return tourRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tour not found with id " + id));
     }
 
     public List<Tour> searchTours(String keyword) {
@@ -39,11 +39,13 @@ public class TourService {
         return tourRepository.save(tour);
     }
 
-    public void deleteTour(Long id) {
-        tourRepository.deleteById(id);
+
+    public void deleteTour(String id) { // Change this to String
+        Tour tour = getTourById(id);
+        tourRepository.delete(tour);
     }
 
-    public TourLog addTourLog(Long tourId, TourLog tourLog) {
+    public TourLog addTourLog(String tourId, TourLog tourLog) {
         Optional<Tour> optionalTour = tourRepository.findById(tourId);
         if (optionalTour.isPresent()) {
             Tour tour = optionalTour.get();

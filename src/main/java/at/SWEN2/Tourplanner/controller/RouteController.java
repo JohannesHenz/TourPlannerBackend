@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/route")
+@RequestMapping("/api/routes")
 public class RouteController {
 
     @Autowired
     private RouteService routeService;
 
-    @PostMapping("/getRoute")
-    public ResponseEntity<RouteResponse> getRoute(@RequestBody RouteRequest request) {
+    @PostMapping
+    public ResponseEntity<RouteResponse> createRoute(@RequestBody RouteRequest request) {
         RouteResponse response = routeService.getRoute(request);
         return ResponseEntity.ok(response);
     }

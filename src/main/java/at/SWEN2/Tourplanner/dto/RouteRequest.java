@@ -1,39 +1,42 @@
 package at.SWEN2.Tourplanner.dto;
 
-import java.util.Arrays;
+import at.SWEN2.Tourplanner.model.TransportType;
+
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class RouteRequest {
+    private String from;
+    private String to;
+    private String transportType;
 
-    private List<List<Double>> coordinates;
+    public RouteRequest() {}
 
-    public RouteRequest(Coordinates from, Coordinates to) {
-        this.coordinates = Arrays.asList(
-                Arrays.asList(from.getLongitude(), from.getLatitude()),
-                Arrays.asList(to.getLongitude(), to.getLatitude())
-        );
+    public RouteRequest(String from, String to) {
+        this.from = from;
+        this.to = to;
     }
 
-    @JsonIgnore
-    public List<Double> getFrom() {
-        return coordinates.get(0);
+    public String getFrom() {
+        return from;
     }
 
-    @JsonIgnore
-    public List<Double> getTo() {
-        return coordinates.get(1);
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public List<List<Double>> getCoordinates() {
-        return coordinates;
+    public String getTo() {
+        return to;
     }
 
-    @Override
-    public String toString() {
-        return "RouteRequest{" +
-                "coordinates=" + coordinates +
-                '}';
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getTransportType() {
+        return transportType;
+    }
+
+    public void setTransportType(String transportType) {
+        this.transportType = transportType;
     }
 }

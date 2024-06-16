@@ -8,11 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "tour_log")
 @Data
 public class TourLog {
     @Id
+    @Column(name = "log_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String logId;
 
 
 
@@ -41,6 +43,14 @@ public class TourLog {
     @JoinColumn(name = "tour_id")
     @JsonBackReference
     private Tour tour;
+
+    public Tour getTour() {
+        return this.tour;
+    }
+
+    public void setId(String logId) {
+        this.logId = logId;
+    }
 
 
 }

@@ -4,7 +4,8 @@ public class Coordinates {
     private double latitude;
     private double longitude;
 
-    // Constructor, Getters, and Setters
+    public Coordinates() {}
+
     public Coordinates(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;

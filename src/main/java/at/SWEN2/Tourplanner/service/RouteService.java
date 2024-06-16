@@ -1,22 +1,20 @@
 package at.SWEN2.Tourplanner.service;
 
 import at.SWEN2.Tourplanner.dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class RouteService {
+    private static final Logger logger = LoggerFactory.getLogger(RouteService.class);
 
     @Autowired
     private RestTemplate restTemplate;
@@ -24,62 +22,91 @@ public class RouteService {
     @Value("${ors.api.key}")
     private String orsApiKey;
 
-    @Value("${osm.api.url}")
-    private String osmApiUrl;
-
     public RouteResponse getRoute(RouteRequest request) {
-        List<Double> fromCoordsList = request.getFrom();
-        List<Double> toCoordsList = request.getTo();
+        List<Double> fromCoords = getCoordinates(request.getFrom());
+        List<Double> toCoords = getCoordinates(request.getTo());
+        logger.info("Before: From coordinates: " + fromCoords);
+        logger.info("Before: To coordinates: " + toCoords);
 
-        Coordinates fromCoords = new Coordinates(fromCoordsList.get(1), fromCoordsList.get(0));
-        Coordinates toCoords = new Coordinates(toCoordsList.get(1), toCoordsList.get(0));
+        String fromCoordsString = String.join(",", fromCoords.stream().map(Object::toString).collect(Collectors.toList()));
+        String toCoordsString = String.join(",", toCoords.stream().map(Object::toString).collect(Collectors.toList()));
 
-        RouteInfo routeInfo = getRouteInfo(fromCoords, toCoords);
+        logger.info("After: From coordinates: " + fromCoordsString);
+        logger.info("After: To coordinates: " + toCoordsString);
+        logger.info("Transport type: " + request.getTransportType());
+        logger.info("API key: " + orsApiKey);
 
-        String mapImageUrl = getMapImageUrl(routeInfo);
+        String url = "https://api.openrouteservice.org/v2/directions/" +
+                request.getTransportType() +
+                "?start=" +
+                fromCoordsString +
+                "&end=" +
+                toCoordsString;
 
-        RouteResponse response = new RouteResponse();
-        response.setEstimatedTime(routeInfo.getSummary().getDuration());
-        response.setDistance(routeInfo.getSummary().getDistance());
-        response.setMapImageUrl(mapImageUrl);
+        logger.info("URL: " + url);
 
-        return response;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(orsApiKey);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers); //Wir holen uns die Headers
+
+        logger.info("Request: " + request.toString());
+
+
+        try {
+            ResponseEntity<RouteResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, RouteResponse.class); //Wir machen den Request
+            RouteResponse response = responseEntity.getBody(); //Wir holen uns den Body der Response
+            logger.info("Response: " + response);
+
+            if (response == null) {
+                logger.error("No response from the ORS API");
+                throw new IllegalStateException("No response from the ORS API");
+            }
+
+            if (response.getFeatures() == null || response.getFeatures().isEmpty()) {
+                logger.error("No features found in the ORS API response");
+                throw new IllegalStateException("No features found in the ORS API response");
+            }
+
+            for (RouteResponse.Feature feature : response.getFeatures()) {
+                if (feature.getGeometry() == null) {
+                    logger.error("Feature geometry is null for feature: " + feature);
+                } else {
+                    //logger.info("Feature geometry coordinates: " + feature.getGeometry().getCoordinates());
+                }
+            }
+
+            return response;
+        } catch (Exception e) {
+            logger.error("Error fetching route: ", e);
+            throw e;
+        }
     }
 
-    private Coordinates getCoordinates(String location) {
+    public List<Double> getCoordinates(String location) {
+        logger.info("Getting coordinates for location: " + location);
         String url = String.format("https://api.openrouteservice.org/geocode/search?api_key=%s&text=%s", orsApiKey, location);
         GeocodeResponse geocodeResponse = restTemplate.getForObject(url, GeocodeResponse.class);
-        return (Coordinates) geocodeResponse.getFeatures().get(0).getGeometry().getCoordinates();
-    }
+        logger.info("Geocode response: " + geocodeResponse);
 
-    private RouteInfo getRouteInfo(Coordinates from, Coordinates to) {
-        String url = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", orsApiKey);
-
-        Map<String, List<List<Double>>> body = new HashMap<>();
-        body.put("coordinates", Arrays.asList(
-                Arrays.asList(from.getLongitude(), from.getLatitude()),
-                Arrays.asList(to.getLongitude(), to.getLatitude())
-        ));
-
-        HttpEntity<Map<String, List<List<Double>>>> request = new HttpEntity<>(body, headers);
-        RouteResponse response = restTemplate.postForObject(url, request, RouteResponse.class);
-
-        if (response == null || response.getFeatures() == null || response.getFeatures().isEmpty()) {
-            throw new IllegalStateException("No routes found in the ORS API response (RouteService)");
+        if (geocodeResponse == null) {
+            logger.error("No response from the ORS Geocode API");
+            throw new IllegalStateException("No response from the ORS Geocode API");
         }
 
-        return response.getFeatures().get(0).getProperties();
-    }
+        if (geocodeResponse.getFeatures() == null || geocodeResponse.getFeatures().isEmpty()) {
+            logger.error("No features found in the ORS Geocode API response");
+            throw new IllegalStateException("No features found in the ORS Geocode API response");
+        }
 
-    private String getMapImageUrl(RouteInfo routeInfo) {
-        List<List<Double>> coordinates = routeInfo.getGeometry().getCoordinates();
-        String coords = coordinates.stream()
-                .map(coord -> coord.get(1) + "," + coord.get(0))
-                .collect(Collectors.joining("|"));
+        GeocodeResponse.Feature firstFeature = geocodeResponse.getFeatures().get(0);
+        if (firstFeature.getGeometry() == null) {
+            logger.error("Geometry is null for the first feature: " + firstFeature);
+            throw new IllegalStateException("Geometry is null for the first feature");
+        }
 
-        return String.format("%s?polyline=%s", osmApiUrl, coords);
+        logger.info("Coordinates found: " + firstFeature.getGeometry().getCoordinates());
+        return firstFeature.getGeometry().getCoordinates();
     }
 }

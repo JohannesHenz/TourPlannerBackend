@@ -1,0 +1,194 @@
+{
+    "geocoding": {
+        "version": "0.2",
+        "attribution": "https://openrouteservice.org/terms-of-service/#attribution-geocode",
+        "query": {
+            "text": "Karlsplatz, Vienna, Austria",
+            "size": 10,
+            "layers": [
+                "venue",
+                "street",
+                "country",
+                "macroregion",
+                "region",
+                "county",
+                "localadmin",
+                "locality",
+                "borough",
+                "neighbourhood",
+                "continent",
+                "empire",
+                "dependency",
+                "macrocounty",
+                "macrohood",
+                "microhood",
+                "disputed",
+                "postalcode",
+                "ocean",
+                "marinearea"
+            ],
+            "private": false,
+            "lang": {
+                "name": "English",
+                "iso6391": "en",
+                "iso6393": "eng",
+                "via": "default",
+                "defaulted": true
+            },
+            "querySize": 20,
+            "parser": "libpostal",
+            "parsed_text": {
+                "street": "karlsplatz",
+                "city": "vienna",
+                "country": "austria"
+            }
+        },
+        "warnings": [
+            "performance optimization: excluding 'address' layer"
+        ],
+        "engine": {
+            "name": "Pelias",
+            "author": "Mapzen",
+            "version": "1.0"
+        },
+        "timestamp": 1718414969540
+    },
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.371233,
+                    48.200254
+                ]
+            },
+            "properties": {
+                "id": "polyline:30766782",
+                "gid": "openstreetmap:street:polyline:30766782",
+                "layer": "street",
+                "source": "openstreetmap",
+                "source_id": "polyline:30766782",
+                "name": "Karlsplatz",
+                "street": "Karlsplatz",
+                "confidence": 1,
+                "match_type": "exact",
+                "accuracy": "centroid",
+                "country": "Austria",
+                "country_gid": "whosonfirst:country:85632785",
+                "country_a": "AUT",
+                "region": "Vienna",
+                "region_gid": "whosonfirst:region:85681667",
+                "region_a": "WI",
+                "localadmin": "Wien",
+                "localadmin_gid": "whosonfirst:localadmin:1108838101",
+                "locality": "Vienna",
+                "locality_gid": "whosonfirst:locality:101748073",
+                "neighbourhood": "Staatsoper",
+                "neighbourhood_gid": "whosonfirst:neighbourhood:85898741",
+                "continent": "Europe",
+                "continent_gid": "whosonfirst:continent:102191581",
+                "label": "Karlsplatz, Vienna, Austria"
+            },
+            "bbox": [
+                16.368822,
+                48.199695,
+                16.373635,
+                48.200761
+            ]
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.369501,
+                    48.199192
+                ]
+            },
+            "properties": {
+                "id": "polyline:6942397",
+                "gid": "openstreetmap:street:polyline:6942397",
+                "layer": "street",
+                "source": "openstreetmap",
+                "source_id": "polyline:6942397",
+                "name": "Karlsplatz",
+                "street": "Karlsplatz",
+                "confidence": 1,
+                "match_type": "exact",
+                "accuracy": "centroid",
+                "country": "Austria",
+                "country_gid": "whosonfirst:country:85632785",
+                "country_a": "AUT",
+                "region": "Vienna",
+                "region_gid": "whosonfirst:region:85681667",
+                "region_a": "WI",
+                "localadmin": "Wien",
+                "localadmin_gid": "whosonfirst:localadmin:1108838101",
+                "locality": "Vienna",
+                "locality_gid": "whosonfirst:locality:101748073",
+                "neighbourhood": "Wieden",
+                "neighbourhood_gid": "whosonfirst:neighbourhood:85898761",
+                "continent": "Europe",
+                "continent_gid": "whosonfirst:continent:102191581",
+                "label": "Karlsplatz, Vienna, Austria"
+            },
+            "bbox": [
+                16.36823,
+                48.198838,
+                16.370762,
+                48.199525
+            ]
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.366859,
+                    48.200957
+                ]
+            },
+            "properties": {
+                "id": "polyline:6948906",
+                "gid": "openstreetmap:street:polyline:6948906",
+                "layer": "street",
+                "source": "openstreetmap",
+                "source_id": "polyline:6948906",
+                "name": "Karlsplatz Westpassage",
+                "street": "Karlsplatz Westpassage",
+                "confidence": 1,
+                "match_type": "exact",
+                "accuracy": "centroid",
+                "country": "Austria",
+                "country_gid": "whosonfirst:country:85632785",
+                "country_a": "AUT",
+                "region": "Vienna",
+                "region_gid": "whosonfirst:region:85681667",
+                "region_a": "WI",
+                "localadmin": "Wien",
+                "localadmin_gid": "whosonfirst:localadmin:1108838101",
+                "locality": "Vienna",
+                "locality_gid": "whosonfirst:locality:101748073",
+                "neighbourhood": "Wieden",
+                "neighbourhood_gid": "whosonfirst:neighbourhood:85898761",
+                "continent": "Europe",
+                "continent_gid": "whosonfirst:continent:102191581",
+                "label": "Karlsplatz Westpassage, Vienna, Austria"
+            },
+            "bbox": [
+                16.366738,
+                48.200946,
+                16.36698,
+                48.200968
+            ]
+        }
+    ],
+    "bbox": [
+        16.366738,
+        48.198838,
+        16.373635,
+        48.200968
+    ]
+}

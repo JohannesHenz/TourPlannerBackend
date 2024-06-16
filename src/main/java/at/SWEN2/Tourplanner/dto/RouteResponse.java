@@ -2,9 +2,13 @@ package at.SWEN2.Tourplanner.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteResponse {
 
@@ -14,38 +18,6 @@ public class RouteResponse {
     private double estimatedTime;
     private double distance;
     private String mapImageUrl;
-
-    public List<Feature> getFeatures() {
-        return features;
-    }
-
-    public void setFeatures(List<Feature> features) {
-        this.features = features;
-    }
-
-    public double getEstimatedTime() {
-        return estimatedTime;
-    }
-
-    public void setEstimatedTime(double estimatedTime) {
-        this.estimatedTime = estimatedTime;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    public String getMapImageUrl() {
-        return mapImageUrl;
-    }
-
-    public void setMapImageUrl(String mapImageUrl) {
-        this.mapImageUrl = mapImageUrl;
-    }
 
     @Override
     public String toString() {
@@ -57,29 +29,47 @@ public class RouteResponse {
                 '}';
     }
 
+    @Setter
+    @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Feature {
-
         @JsonProperty("properties")
         private RouteInfo properties;
 
         @JsonProperty("geometry")
-        private RouteInfo.Geometry geometry;
+        private Geometry geometry;
+    }
+    @Setter
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Properties {
+        private List<Segment> segments;
 
-        public RouteInfo getProperties() {
-            return properties;
-        }
+        @Setter
+        @Getter
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class Segment {
+            private double distance;
+            private double duration;
+            private List<Step> steps;
 
-        public void setProperties(RouteInfo properties) {
-            this.properties = properties;
+            @Setter
+            @Getter
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            public static class Step {
+                private double distance;
+                private double duration;
+                private String instruction;
+            }
         }
+    }
 
-        public RouteInfo.Geometry getGeometry() {
-            return geometry;
-        }
 
-        public void setGeometry(RouteInfo.Geometry geometry) {
-            this.geometry = geometry;
-        }
+    @Setter
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Geometry {
+        @JsonProperty("coordinates")
+        private List<List<Double>> coordinates;
     }
 }

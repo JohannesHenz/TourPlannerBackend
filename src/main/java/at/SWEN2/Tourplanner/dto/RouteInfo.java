@@ -2,9 +2,13 @@ package at.SWEN2.Tourplanner.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteInfo {
 
@@ -14,43 +18,14 @@ public class RouteInfo {
     @JsonProperty("geometry")
     private Geometry geometry;
 
-    public Summary getSummary() {
-        return summary;
-    }
-
-    public void setSummary(Summary summary) {
-        this.summary = summary;
-    }
-
-    public Geometry getGeometry() {
-        return geometry;
-    }
-
-    public void setGeometry(Geometry geometry) {
-        this.geometry = geometry;
-    }
-
+    @Setter
+    @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Summary {
         private double distance;
         private double duration;
-
-        public double getDistance() {
-            return distance;
-        }
-
-        public void setDistance(double distance) {
-            this.distance = distance;
-        }
-
-        public double getDuration() {
-            return duration;
-        }
-
-        public void setDuration(double duration) {
-            this.duration = duration;
-        }
     }
+
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Geometry {
@@ -63,6 +38,24 @@ public class RouteInfo {
 
         public void setCoordinates(List<List<Double>> coordinates) {
             this.coordinates = coordinates;
+        }
+    }
+
+    @Setter
+    @Getter
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Segment {
+        private double distance;
+        private double duration;
+        private List<Step> steps;
+
+        @Setter
+        @Getter
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class Step {
+            private double distance;
+            private double duration;
+            private String instruction;
         }
     }
 }
