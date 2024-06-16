@@ -49,7 +49,7 @@ public class TourLog {
         return this.tour;
     }
 
-    public void setId(String logId) {
+    public void setLogId(String logId) {
         this.logId = logId;
     }
 

@@ -13,11 +13,12 @@ public class TourLogController {
     @Autowired
     private TourLogService tourLogService;
 
+    /*
     @GetMapping
     public List<TourLog> getAllTourLogs(@RequestParam String tourId) {
-        return tourLogService.getTourLogsByTourId(tourId);
+        return tourLogService.getTourLogById(tourId);
     }
-
+*/
     @PostMapping
     public TourLog createTourLog(@RequestBody TourLog tourLog) {
         return tourLogService.saveTourLog(tourLog);
@@ -25,7 +26,7 @@ public class TourLogController {
 
     @PutMapping("/{id}")
     public TourLog updateTourLog(@PathVariable String id, @RequestBody TourLog tourLog) {
-        tourLog.setId(id);
+        tourLog.setLogId(id);
         return tourLogService.saveTourLog(tourLog);
     }
     // todo: change it so it uses

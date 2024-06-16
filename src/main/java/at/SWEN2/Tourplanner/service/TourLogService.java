@@ -13,9 +13,10 @@ public class TourLogService {
     @Autowired
     private TourLogRepository tourLogRepository;
 
-    public List<TourLog> getTourLogsByTourId(String tourId) { // Change this to String
-        return tourLogRepository.findByTourId(tourId);
+    public TourLog getTourLogById(String logId) {
+        return tourLogRepository.findById(logId).orElse(null);
     }
+
 
     public TourLog saveTourLog(TourLog tourLog) {
         return tourLogRepository.save(tourLog);
@@ -28,6 +29,7 @@ public class TourLogService {
         if (!tourLog.getTour().getId().equals(tourId)) {
             throw new IllegalArgumentException("TourLog with id " + logId + " does not belong to Tour with id " + tourId);
         }
+
 
         tourLogRepository.delete(tourLog);
     }

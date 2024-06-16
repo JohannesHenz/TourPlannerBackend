@@ -94,12 +94,30 @@ public class TourController {
 
 
     // PUT (update) a specific TourLog for a specific tour
+    // PUT (update) a specific TourLog for a specific tour
     @PutMapping("/{tourId}/{logId}")
     public ResponseEntity<TourLog> updateTourLog(@PathVariable String tourId, @PathVariable String logId, @RequestBody TourLog tourLog) {
-        tourLog.setId(logId);
-        TourLog updatedTourLog = tourService.addTourLog(tourId, tourLog);
+        // Fetch the existing TourLog from the database
+        TourLog existingTourLog = tourLogService.getTourLogById(logId);
+        if (existingTourLog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Update the properties of the existing TourLog
+        existingTourLog.setDate(tourLog.getDate());
+        existingTourLog.setTime(tourLog.getTime());
+        existingTourLog.setComment(tourLog.getComment());
+        existingTourLog.setDifficulty(tourLog.getDifficulty());
+        existingTourLog.setTotalDistance(tourLog.getTotalDistance());
+        existingTourLog.setTotalTime(tourLog.getTotalTime());
+        existingTourLog.setRating(tourLog.getRating());
+
+        // Save the updated TourLog
+        TourLog updatedTourLog = tourLogService.saveTourLog(existingTourLog);
+
         return new ResponseEntity<>(updatedTourLog, HttpStatus.OK);
     }
+
     // DELETE a specific tour
     @DeleteMapping("/{tourId}")
     public ResponseEntity<Void> deleteTour(@PathVariable String tourId) {
