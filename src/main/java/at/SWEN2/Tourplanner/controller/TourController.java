@@ -66,6 +66,7 @@ public class TourController {
     }
 
 
+
     // PUT (update) a specific tour
     @PutMapping("/{tourId}")
     public ResponseEntity<Tour> updateTour(@PathVariable String tourId, @RequestBody Tour tour) {
@@ -81,16 +82,23 @@ public class TourController {
         existingTour.setTransportType(tour.getTransportType());
         existingTour.setDistance(tour.getDistance());
         existingTour.setEstimatedTime(tour.getEstimatedTime());
-        existingTour.setMapImageUrl(tour.getMapImageUrl());
 
-        // Do not set the tourLogs to null
-        if (tour.getTourLogs() != null) {
-            existingTour.setTourLogs(tour.getTourLogs());
+        // Store the old image path before updating
+        String oldImagePath = existingTour.getMapImageUrl();
+
+        // Process the route and image and set the new image path
+        processRouteAndImage(existingTour);
+
+        // Delete the old image if it is different from the new one
+        if (oldImagePath != null && !oldImagePath.equals(existingTour.getMapImageUrl())) {
+            mapImageService.deleteImage(oldImagePath);
         }
 
         Tour updatedTour = tourService.saveTour(existingTour);
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
+
+
 
 
     // PUT (update) a specific TourLog for a specific tour
