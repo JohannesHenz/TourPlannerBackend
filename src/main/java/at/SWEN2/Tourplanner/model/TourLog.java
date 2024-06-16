@@ -6,15 +6,16 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tour_log")
 @Data
 public class TourLog {
+
     @Id
     @Column(name = "log_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String logId;
+    private String logId = UUID.randomUUID().toString();;
 
 
 

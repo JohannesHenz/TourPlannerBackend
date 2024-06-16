@@ -1,7 +1,5 @@
-DROP TABLE IF EXISTS tour_log CASCADE;
-DROP TABLE IF EXISTS tour CASCADE;
 
-CREATE TABLE tour (
+CREATE TABLE IF NOT EXISTS tour(
                       id VARCHAR(36) PRIMARY KEY,
                       name VARCHAR(100) NOT NULL,
                       description TEXT,
@@ -13,7 +11,7 @@ CREATE TABLE tour (
                       map_image_url VARCHAR(255)
 );
 
-CREATE TABLE tour_log (
+CREATE TABLE IF NOT EXISTS tour_log (
                           log_id VARCHAR(36) PRIMARY KEY,
                           date TIMESTAMP,
                           time DOUBLE PRECISION,
