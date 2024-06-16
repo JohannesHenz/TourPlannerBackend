@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-const coordinates = JSON.parse(process.argv[2]);
+const coordinatesFilePath = process.argv[2];
 const filePath = process.argv[3];
-console.log(filePath);
 
 (async () => {
+    const coordinates = JSON.parse(fs.readFileSync(coordinatesFilePath, 'utf8'));
+
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -18,7 +19,8 @@ console.log(filePath);
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
             <style>
-                #map { height: 600px; width: 800px; }
+                #map { height: 349px; width: 784px; }
+                body, html { margin: 0; padding: 0; }
             </style>
         </head>
         <body>
@@ -45,7 +47,7 @@ console.log(filePath);
 
     await page.setContent(content);
     await page.waitForSelector('#map');
-   // await page.waitForTimeout(5000); // Ensure tiles load
+    await page.setViewport({ width: 784, height: 349 });
     await page.screenshot({ path: filePath });
 
     await browser.close();

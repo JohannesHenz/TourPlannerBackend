@@ -7,12 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MapImageService {
@@ -42,11 +40,24 @@ public class MapImageService {
         // Log the coordinates JSON
         logger.debug("Coordinates JSON: {}", coordinatesJson);
 
+        // Define the temporary directory and file path
         String basePath = Paths.get("").toAbsolutePath().toString();
-        ProcessBuilder processBuilder = new ProcessBuilder("node", "generateMapImage.js", coordinatesJson, imagePath);
+        String tempDirPath = basePath + "/temp";
+        File tempDir = new File(tempDirPath);
+        if (!tempDir.exists()) {
+            tempDir.mkdirs();
+        }
+        String tempFilePath = tempDirPath + "/" + UUID.randomUUID().toString() + ".json";
+        File tempFile = new File(tempFilePath);
+
+        // Write the coordinates JSON to the temporary file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            writer.write(coordinatesJson);
+        }
+
+        ProcessBuilder processBuilder = new ProcessBuilder("node", "generateMapImage.js", tempFilePath, imagePath);
         processBuilder.directory(new File(basePath));
         processBuilder.redirectErrorStream(true);
-
 
         Process process = processBuilder.start();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
@@ -59,6 +70,11 @@ public class MapImageService {
         int exitCode = process.waitFor();
         if (exitCode != 0) {
             throw new IllegalStateException("Error generating map image, exit code: " + exitCode);
+        }
+
+        // Delete the temporary file after the process completes
+        if (!tempFile.delete()) {
+            logger.warn("Failed to delete temporary file: " + tempFilePath);
         }
     }
 
