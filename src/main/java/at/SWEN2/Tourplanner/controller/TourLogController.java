@@ -13,12 +13,6 @@ public class TourLogController {
     @Autowired
     private TourLogService tourLogService;
 
-    /*
-    @GetMapping
-    public List<TourLog> getAllTourLogs(@RequestParam String tourId) {
-        return tourLogService.getTourLogById(tourId);
-    }
-*/
     @PostMapping
     public TourLog createTourLog(@RequestBody TourLog tourLog) {
         return tourLogService.saveTourLog(tourLog);
@@ -29,12 +23,11 @@ public class TourLogController {
         tourLog.setLogId(id);
         return tourLogService.saveTourLog(tourLog);
     }
-    // todo: change it so it uses
+
 
     @DeleteMapping("/{id}")
     public void deleteTourLog(@PathVariable String tourId, @PathVariable String logId) {
         tourLogService.deleteTourLog(tourId, logId);
     }
 
-    // Additional endpoints...
 }

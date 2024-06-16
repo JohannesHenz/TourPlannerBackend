@@ -25,22 +25,22 @@ public class MapImageService {
         logger.info("Routeinfo: " + routeInfo.toString());
         logger.info("Geometry: " + geometry);
         if (geometry == null) {
-            logger.error("Geometry is null 27");
+            logger.error("Geometry is null");
             return;
         }
 
         List<List<Double>> coordinates = geometry.getCoordinates();
         if (coordinates == null) {
-            logger.error("Coordinates are null 33");
+            logger.error("Coordinates are null");
             return;
         }
 
         String coordinatesJson = new ObjectMapper().writeValueAsString(coordinates);
 
-        // Log the coordinates JSON
+        // logge die Koordinaten
         logger.debug("Coordinates JSON: {}", coordinatesJson);
 
-        // Define the temporary directory and file path
+        // mache einen temporäres directory um die JSON Kooridnaten zu speichern
         String basePath = Paths.get("").toAbsolutePath().toString();
         String tempDirPath = basePath + "/temp";
         File tempDir = new File(tempDirPath);
@@ -50,7 +50,7 @@ public class MapImageService {
         String tempFilePath = tempDirPath + "/" + UUID.randomUUID().toString() + ".json";
         File tempFile = new File(tempFilePath);
 
-        // Write the coordinates JSON to the temporary file
+        // Schreibe die JSON Koordinaten in die temporäre Datei
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
             writer.write(coordinatesJson);
         }
@@ -72,7 +72,7 @@ public class MapImageService {
             throw new IllegalStateException("Error generating map image, exit code: " + exitCode);
         }
 
-        // Delete the temporary file after the process completes
+        // Lösche die temporäre JSON Datei nachdem das Bild generiert wurde
         if (!tempFile.delete()) {
             logger.warn("Failed to delete temporary file: " + tempFilePath);
         }

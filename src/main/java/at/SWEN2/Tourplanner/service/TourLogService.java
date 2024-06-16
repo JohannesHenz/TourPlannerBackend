@@ -22,7 +22,7 @@ public class TourLogService {
         return tourLogRepository.save(tourLog);
     }
 
-    public void deleteTourLog(String tourId, String logId) { // Change this to take two parameters
+    public void deleteTourLog(String tourId, String logId) {
         TourLog tourLog = tourLogRepository.findById(logId)
                 .orElseThrow(() -> new ResourceNotFoundException("TourLog not found with id " + logId));
 

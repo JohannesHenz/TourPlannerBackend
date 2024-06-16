@@ -1,3 +1,4 @@
+//diese Datei macht die Karte aus den Koordinaten und macht mit Puppeteer ein Bild davon
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 

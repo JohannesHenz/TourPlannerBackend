@@ -25,17 +25,14 @@ public class RouteService {
     public RouteResponse getRoute(RouteRequest request) {
         List<Double> fromCoords = getCoordinates(request.getFrom());
         List<Double> toCoords = getCoordinates(request.getTo());
-        logger.info("Before: From coordinates: " + fromCoords);
-        logger.info("Before: To coordinates: " + toCoords);
+
 
         String fromCoordsString = String.join(",", fromCoords.stream().map(Object::toString).collect(Collectors.toList()));
         String toCoordsString = String.join(",", toCoords.stream().map(Object::toString).collect(Collectors.toList()));
 
-        logger.info("After: From coordinates: " + fromCoordsString);
-        logger.info("After: To coordinates: " + toCoordsString);
         logger.info("Transport type: " + request.getTransportType());
-        logger.info("API key: " + orsApiKey);
 
+        //bastel die URL zusammen
         String url = "https://api.openrouteservice.org/v2/directions/" +
                 request.getTransportType() +
                 "?start=" +
@@ -45,6 +42,7 @@ public class RouteService {
 
         logger.info("URL: " + url);
 
+        //setze die Header Variablen
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(orsApiKey);
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -72,8 +70,6 @@ public class RouteService {
             for (RouteResponse.Feature feature : response.getFeatures()) {
                 if (feature.getGeometry() == null) {
                     logger.error("Feature geometry is null for feature: " + feature);
-                } else {
-                    //logger.info("Feature geometry coordinates: " + feature.getGeometry().getCoordinates());
                 }
             }
 

@@ -15,7 +15,7 @@
 <script>
     const coordinates = {{coordinates}};
 
-    // Correct the order if necessary, assuming your original data is [latitude, longitude]
+
     const correctedCoordinates = coordinates.map(coord => [coord[1], coord[0]]);
 
     const map = L.map('map').setView(correctedCoordinates[0], 13);

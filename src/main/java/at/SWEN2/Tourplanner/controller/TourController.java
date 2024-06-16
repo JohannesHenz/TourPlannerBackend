@@ -40,13 +40,13 @@ public class TourController {
     @Autowired
     private MapImageService mapImageService;
 
-    // GET all tours
+    // GET alle tours
     @GetMapping
     public List<Tour> getAllTours() {
         return tourService.getAllTours();
     }
 
-    // POST a new tour
+    // POST neue Tour erstellen
     @PostMapping
     public ResponseEntity<Tour> createTour(@RequestBody Tour tour) {
         Tour createdTour = tourService.saveTour(tour);
@@ -54,7 +54,7 @@ public class TourController {
         return new ResponseEntity<>(createdTour, HttpStatus.CREATED);
     }
 
-    // POST a new TourLog for a specific tour
+    // POST neue TourLog für eine spezifische Tour erstellen
     @PostMapping("/{tourId}/logs")
     public ResponseEntity<TourLog> createTourLog(@PathVariable String tourId, @RequestBody TourLog tourLog) {
         Tour tour = tourService.getTourById(tourId);
@@ -63,7 +63,7 @@ public class TourController {
         return new ResponseEntity<>(createdTourLog, HttpStatus.CREATED);
     }
 
-    // PUT (update) a specific tour
+    // PUT (update) eine spezifische Tour
     @PutMapping("/{tourId}")
     public ResponseEntity<Tour> updateTour(@PathVariable String tourId, @RequestBody Tour tour) {
         Tour existingTour = tourService.getTourById(tourId);
@@ -94,7 +94,7 @@ public class TourController {
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
 
-    // PUT (update) a specific TourLog for a specific tour
+    // PUT update eine spezifische TourLog für eine spezifische Tour
     @PutMapping("/{tourId}/{logId}")
     public ResponseEntity<TourLog> updateTourLog(@PathVariable String tourId, @PathVariable String logId, @RequestBody TourLog tourLog) {
         // Fetch the existing TourLog from the database
@@ -118,21 +118,21 @@ public class TourController {
         return new ResponseEntity<>(updatedTourLog, HttpStatus.OK);
     }
 
-    // DELETE a specific tour
+    // DELETE lösche eine spezifische Tour
     @DeleteMapping("/{tourId}")
     public ResponseEntity<Void> deleteTour(@PathVariable String tourId) {
         tourService.deleteTour(tourId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // DELETE a specific TourLog for a specific tour
+    // DELETE lösche eine spezifische TourLog für eine spezifische Tour
     @DeleteMapping("/{tourId}/{logId}")
     public ResponseEntity<Void> deleteTourLog(@PathVariable String tourId, @PathVariable String logId) {
         tourLogService.deleteTourLog(tourId, logId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // GET the image of a specific tour
+    // GET holt das Bild für eine spezifische Tour
     @GetMapping("/{tourId}/image")
     public ResponseEntity<Resource> getTourImage(@PathVariable String tourId) {
         Tour tour = tourService.getTourById(tourId);
@@ -153,7 +153,7 @@ public class TourController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    //macht alles bereit damit mapImageService.downloadMapImage aufgerufen werden kann
     private void processRouteAndImage(Tour tour) {
         if (tour.getFromLocation() != null && tour.getToLocation() != null && tour.getTransportType() != null) {
             RouteRequest routeRequest = new RouteRequest();
