@@ -1,0 +1,4 @@
+GRANT ALL PRIVILEGES ON DATABASE tourplanner_db TO tourplanner_user;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO tourplanner_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO tourplanner_user;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO tourplanner_user;

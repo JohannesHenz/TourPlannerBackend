@@ -25,7 +25,7 @@ public class Tour {
     private String toLocation;
 
     @Column(name = "transport_type")
-    private String transportType;
+    private String transportType; // Changed to String
 
     @Column(name = "distance")
     private Double distance;
@@ -61,7 +61,6 @@ public class Tour {
     public String getFromLocation() {
         return fromLocation;
     }
-
     public String getToLocation() {
         return toLocation;
     }
