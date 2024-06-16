@@ -1,8 +1,8 @@
 package at.SWEN2.Tourplanner.service;
 
 import at.SWEN2.Tourplanner.dto.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RouteService {
-    private static final Logger logger = LoggerFactory.getLogger(RouteService.class);
+    private static final Logger logger = LogManager.getLogger(RouteService.class);
 
     @Autowired
     private RestTemplate restTemplate;

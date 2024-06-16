@@ -8,8 +8,8 @@ import at.SWEN2.Tourplanner.service.MapImageService;
 import at.SWEN2.Tourplanner.service.RouteService;
 import at.SWEN2.Tourplanner.service.TourLogService;
 import at.SWEN2.Tourplanner.service.TourService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -29,9 +29,7 @@ public class TourController {
     @Autowired
     private ResourceLoader resourceLoader;
 
-
-    private static final Logger logger = LoggerFactory.getLogger(MapImageService.class);
-
+    private static final Logger logger = LogManager.getLogger(TourController.class);
 
     @Autowired
     private TourService tourService;
@@ -65,8 +63,6 @@ public class TourController {
         return new ResponseEntity<>(createdTourLog, HttpStatus.CREATED);
     }
 
-
-
     // PUT (update) a specific tour
     @PutMapping("/{tourId}")
     public ResponseEntity<Tour> updateTour(@PathVariable String tourId, @RequestBody Tour tour) {
@@ -98,10 +94,6 @@ public class TourController {
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
 
-
-
-
-    // PUT (update) a specific TourLog for a specific tour
     // PUT (update) a specific TourLog for a specific tour
     @PutMapping("/{tourId}/{logId}")
     public ResponseEntity<TourLog> updateTourLog(@PathVariable String tourId, @PathVariable String logId, @RequestBody TourLog tourLog) {
@@ -133,14 +125,12 @@ public class TourController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
     // DELETE a specific TourLog for a specific tour
     @DeleteMapping("/{tourId}/{logId}")
     public ResponseEntity<Void> deleteTourLog(@PathVariable String tourId, @PathVariable String logId) {
         tourLogService.deleteTourLog(tourId, logId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
     // GET the image of a specific tour
     @GetMapping("/{tourId}/image")
@@ -163,8 +153,6 @@ public class TourController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
     private void processRouteAndImage(Tour tour) {
         if (tour.getFromLocation() != null && tour.getToLocation() != null && tour.getTransportType() != null) {
@@ -189,7 +177,7 @@ public class TourController {
                     String basePath = Paths.get("").toAbsolutePath().toString();
                     String imagePath = basePath + "\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images\\images" + tour.getId() + ".png";
                     try {
-                        mapImageService.downloadMapImage(feature.getProperties(),feature.getGeometry(), imagePath);
+                        mapImageService.downloadMapImage(feature.getProperties(), feature.getGeometry(), imagePath);
                         tour.setMapImageUrl(imagePath);
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -204,6 +192,4 @@ public class TourController {
             logger.error("FromLocation, ToLocation or TransportType is null");
         }
     }
-
-    // Other methods...
 }

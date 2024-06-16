@@ -3,8 +3,8 @@ package at.SWEN2.Tourplanner.service;
 import at.SWEN2.Tourplanner.dto.RouteInfo;
 import at.SWEN2.Tourplanner.dto.RouteResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 public class MapImageService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MapImageService.class);
+    private static final Logger logger = LogManager.getLogger(MapImageService.class);
 
     public void downloadMapImage(RouteInfo routeInfo, RouteResponse.Geometry geometry, String imagePath) throws IOException, InterruptedException {
         if (routeInfo == null) {
