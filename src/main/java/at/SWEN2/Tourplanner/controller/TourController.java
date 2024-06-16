@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -68,8 +69,26 @@ public class TourController {
     // PUT (update) a specific tour
     @PutMapping("/{tourId}")
     public ResponseEntity<Tour> updateTour(@PathVariable String tourId, @RequestBody Tour tour) {
-        tour.setId(tourId);
-        Tour updatedTour = tourService.saveTour(tour);
+        Tour existingTour = tourService.getTourById(tourId);
+        if (existingTour == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        existingTour.setName(tour.getName());
+        existingTour.setDescription(tour.getDescription());
+        existingTour.setFromLocation(tour.getFromLocation());
+        existingTour.setToLocation(tour.getToLocation());
+        existingTour.setTransportType(tour.getTransportType());
+        existingTour.setDistance(tour.getDistance());
+        existingTour.setEstimatedTime(tour.getEstimatedTime());
+        existingTour.setMapImageUrl(tour.getMapImageUrl());
+
+        // Do not set the tourLogs to null
+        if (tour.getTourLogs() != null) {
+            existingTour.setTourLogs(tour.getTourLogs());
+        }
+
+        Tour updatedTour = tourService.saveTour(existingTour);
         return new ResponseEntity<>(updatedTour, HttpStatus.OK);
     }
 
@@ -129,16 +148,24 @@ public class TourController {
     public ResponseEntity<Resource> getTourImage(@PathVariable String tourId) {
         Tour tour = tourService.getTourById(tourId);
         if (tour != null) {
-            String imagePath = "C:\\Users\\Johannes Henz\\Desktop\\Tourplanner_Backend\\Tourplanner\\src\\main\\java\\at\\SWEN2\\Tourplanner\\images" + tour.getId() + ".png";
+            String basePath = Paths.get("").toAbsolutePath().toString();
+            String imagePath = "file:" + basePath + "/src/main/java/at/SWEN2/Tourplanner/images" + tour.getId() + ".png";
             Resource imageResource = resourceLoader.getResource(imagePath);
-            logger.info("Image resource: " + imageResource);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_PNG)
-                    .body(imageResource);
+            if (imageResource.exists()) {
+                logger.info("Image resource: " + imageResource);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_PNG)
+                        .body(imageResource);
+            } else {
+                logger.error("Image not found at path: " + imagePath);
+                return ResponseEntity.notFound().build();
+            }
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
     private void processRouteAndImage(Tour tour) {
         if (tour.getFromLocation() != null && tour.getToLocation() != null && tour.getTransportType() != null) {
