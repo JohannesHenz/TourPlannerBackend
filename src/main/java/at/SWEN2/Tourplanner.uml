@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/Johannes Henz/Desktop/Tourplanner_Backend/Tourplanner/src/main/java/at/SWEN2/Tourplanner</OriginalElement>
+  <nodes>
+    <node x="1056.5" y="2195.5">at.SWEN2.Tourplanner.model.Tour</node>
+    <node x="-14.0" y="991.5">at.SWEN2.Tourplanner.service.TourService</node>
+    <node x="1090.0" y="716.0">at.SWEN2.Tourplanner.TourplannerApplication</node>
+    <node x="215.5" y="728.5">at.SWEN2.Tourplanner.repository.TourRepository</node>
+    <node x="232.5" y="2579.5">at.SWEN2.Tourplanner.controller.TourLogController</node>
+    <node x="899.5" y="3171.5">at.SWEN2.Tourplanner.dto.RouteResponse</node>
+    <node x="930.5" y="1076.0">at.SWEN2.Tourplanner.config.AppConfig</node>
+    <node x="462.5" y="1039.5">at.SWEN2.Tourplanner.service.TourLogService</node>
+    <node x="770.0" y="655.5">at.SWEN2.Tourplanner.dto.RouteInfo</node>
+    <node x="-115.5" y="728.5">at.SWEN2.Tourplanner.exception.ResourceNotFoundException</node>
+    <node x="911.0" y="408.5">at.SWEN2.Tourplanner.repository.TourLogRepository</node>
+    <node x="632.0" y="1587.5">at.SWEN2.Tourplanner.service.RouteService</node>
+    <node x="521.5" y="251.5">at.SWEN2.Tourplanner.model.RouteInfo</node>
+    <node x="1067.5" y="1275.5">at.SWEN2.Tourplanner.model.TourLog</node>
+    <node x="-152.5" y="1527.5">at.SWEN2.Tourplanner.dto.RouteRequest</node>
+    <node x="64.0" y="299.5">at.SWEN2.Tourplanner.model.TransportType</node>
+    <node x="404.5" y="3303.5">at.SWEN2.Tourplanner.controller.RouteController</node>
+    <node x="739.5" y="2591.5">at.SWEN2.Tourplanner.dto.GeocodeResponse</node>
+    <node x="-148.0" y="3147.5">at.SWEN2.Tourplanner.controller.TourController</node>
+    <node x="191.5" y="1611.5">at.SWEN2.Tourplanner.service.MapImageService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="at.SWEN2.Tourplanner.model.Tour" target="at.SWEN2.Tourplanner.model.TourLog" relationship="TO_MANY">
+      <point x="64.75" y="-464.5" />
+      <point x="1250.75" y="2160.0" />
+      <point x="1245.25" y="2160.0" />
+      <point x="59.25" y="404.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.service.TourService" target="at.SWEN2.Tourplanner.repository.TourLogRepository" relationship="TO_ONE">
+      <point x="90.0" y="-128.5" />
+      <point x="256.0" y="960.0" />
+      <point x="406.0" y="960.0" />
+      <point x="406.0" y="900.0" />
+      <point x="686.0" y="900.0" />
+      <point x="686.0" y="880.0" />
+      <point x="1046.0" y="880.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.service.TourService" target="at.SWEN2.Tourplanner.repository.TourRepository" relationship="TO_ONE">
+      <point x="90.0" y="-128.5" />
+      <point x="256.0" y="960.0" />
+      <point x="406.0" y="960.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.service.TourLogService" target="at.SWEN2.Tourplanner.repository.TourLogRepository" relationship="TO_ONE">
+      <point x="71.75" y="-80.5" />
+      <point x="677.75" y="1000.0" />
+      <point x="686.0" y="1000.0" />
+      <point x="686.0" y="880.0" />
+      <point x="1046.0" y="880.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.model.TourLog" target="at.SWEN2.Tourplanner.model.Tour" relationship="TO_ONE">
+      <point x="-59.25" y="404.5" />
+      <point x="1126.75" y="2160.0" />
+      <point x="1121.25" y="2160.0" />
+      <point x="-64.75" y="-464.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourController" target="at.SWEN2.Tourplanner.dto.RouteRequest" relationship="CREATE">
+      <point x="-117.0" y="-212.5" />
+      <point x="-31.0" y="3120.0" />
+      <point x="-34.0" y="3120.0" />
+      <point x="0.0" y="152.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.service.TourService" target="at.SWEN2.Tourplanner.exception.ResourceNotFoundException" relationship="CREATE">
+      <point x="-90.0" y="-128.5" />
+      <point x="76.0" y="940.0" />
+      <point x="86.0" y="940.0" />
+      <point x="86.0" y="820.0" />
+      <point x="26.0" y="820.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourController" target="at.SWEN2.Tourplanner.service.TourService" relationship="TO_ONE">
+      <point x="117.0" y="-212.5" />
+      <point x="203.0" y="3120.0" />
+      <point x="206.0" y="3120.0" />
+      <point x="206.0" y="1780.0" />
+      <point x="166.0" y="1780.0" />
+      <point x="0.0" y="128.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.service.TourLogService" target="at.SWEN2.Tourplanner.exception.ResourceNotFoundException" relationship="CREATE">
+      <point x="-71.75" y="-80.5" />
+      <point x="534.25" y="940.0" />
+      <point x="86.0" y="940.0" />
+      <point x="86.0" y="820.0" />
+      <point x="26.0" y="820.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourController" target="at.SWEN2.Tourplanner.service.TourLogService" relationship="TO_ONE">
+      <point x="117.0" y="-212.5" />
+      <point x="203.0" y="3120.0" />
+      <point x="206.0" y="3120.0" />
+      <point x="206.0" y="1800.0" />
+      <point x="426.0" y="1800.0" />
+      <point x="426.0" y="1760.0" />
+      <point x="606.0" y="1760.0" />
+      <point x="0.0" y="80.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourLogController" target="at.SWEN2.Tourplanner.service.TourLogService" relationship="TO_ONE">
+      <point x="0.0" y="-80.5" />
+      <point x="386.0" y="2540.0" />
+      <point x="426.0" y="2540.0" />
+      <point x="426.0" y="1760.0" />
+      <point x="606.0" y="1760.0" />
+      <point x="0.0" y="80.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourController" target="at.SWEN2.Tourplanner.service.MapImageService" relationship="TO_ONE">
+      <point x="117.0" y="-212.5" />
+      <point x="203.0" y="3120.0" />
+      <point x="206.0" y="3120.0" />
+      <point x="206.0" y="1780.0" />
+      <point x="386.0" y="1780.0" />
+      <point x="0.0" y="68.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.RouteController" target="at.SWEN2.Tourplanner.service.RouteService" relationship="TO_ONE">
+      <point x="0.0" y="-56.5" />
+      <point x="626.0" y="1800.0" />
+      <point x="786.0" y="1800.0" />
+      <point x="0.0" y="92.5" />
+    </edge>
+    <edge source="at.SWEN2.Tourplanner.controller.TourController" target="at.SWEN2.Tourplanner.service.RouteService" relationship="TO_ONE">
+      <point x="117.0" y="-212.5" />
+      <point x="203.0" y="3120.0" />
+      <point x="206.0" y="3120.0" />
+      <point x="206.0" y="2520.0" />
+      <point x="626.0" y="2520.0" />
+      <point x="626.0" y="1800.0" />
+      <point x="786.0" y="1800.0" />
+      <point x="0.0" y="92.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.7560908045332136" showDependencies="true" x="647.4159686956522" y="1384.6993947826084" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

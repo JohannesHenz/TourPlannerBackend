@@ -34,7 +34,7 @@ public class TourController {
     @Autowired
     private TourService tourService;
     @Autowired
-    private TourLogService tourLogService; // Inject the TourLogService
+    private TourLogService tourLogService;
     @Autowired
     private RouteService routeService;
     @Autowired

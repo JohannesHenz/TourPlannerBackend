@@ -61,3 +61,7 @@ When a user creates a new tour through the frontend, the following steps occur i
 3. Once the route information is retrieved, `TourService` saves the tour details to the database via `TourRepository`.
 4. The `MapImageService` is called to download a map image for the tour route.
 5. Finally, the new tour details are returned to the frontend.
+
+## Git Link:
+### Frontend: https://github.com/JohannesHenz/TourPlanner
+### Backend: https://github.com/JohannesHenz/TourPlannerBackend
