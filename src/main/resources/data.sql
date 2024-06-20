@@ -14,3 +14,7 @@ VALUES ('1', '2024-06-15', 'Great tour!', 3, 120.0, 5, '1')
 INSERT INTO tour_log (log_id, date, comment, difficulty, total_time, rating, tour_id)
 VALUES ('2', '2024-06-16', 'Nice tour!', 2, 60.0, 4, '2')
     ON CONFLICT (log_id) DO NOTHING;
+
+
+DELETE FROM tour WHERE id = '1';
+DELETE FROM tour WHERE id = '2';
